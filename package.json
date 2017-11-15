@@ -7,6 +7,12 @@
     "start": "node tweetit.js",
     "start-background": "forever start tweetit.js",
     "stop-background": "forever stop tweetit.js",
+    "start-background-sport": "forever start sportweetit.js",
+    "stop-background-sport": "forever stop sportweetit.js",
+    "start-background-business": "forever start busitweetit.js",
+    "stop-background-business": "forever stop busitweetit.js",
+    "start-background-tech": "forever start techtweetit.js",
+    "stop-background-tech": "forever stop techtweetit.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
