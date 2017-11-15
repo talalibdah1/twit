@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start" : "node tweetit.js",
+    "start": "node tweetit.js",
+    "start-background": "forever start tweetit.js",
+    "stop-background": "forever stop tweetit.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "forever": "^0.15.3",
     "twit": "^2.2.9"
   }
 }

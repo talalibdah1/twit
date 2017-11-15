@@ -14,7 +14,7 @@ const host = 'www.baaz.com';
 
 // Do the tweet in a cron 
 var job = new cronJob({
-    cronTime: '0 */5 * * * *',
+    cronTime: '0 */15 * * * *',
     onTick: function() {
       getToken().then((token)=>{
         callTrending('all', 'all', token).then((output) => {

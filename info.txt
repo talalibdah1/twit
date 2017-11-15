@@ -1,0 +1,3 @@
+Start it using : 
+npm run start-background
+npm run stop-background
