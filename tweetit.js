@@ -1,4 +1,4 @@
-
+var cronJob = require('cron').CronJob;
 var Twit = require('twit');
 //var config = require();
 var T = new Twit({
@@ -12,30 +12,34 @@ var T = new Twit({
 const http = require('https');
 const host = 'www.baaz.com';
 
-// Do the tweet
-getToken().then((token)=>{
-  callTrending('all', 'all', token).then((output) => {
-    shortURL (output).then((news) => {
-      var fields2 = news.split('~');
-      var newsoutput = fields2[0];
-      var tweetbodyoutput = fields2[1];
-      console.log('Shortining done now : ' + news);
-      console.log('tweet body done now : ' + tweetbodyoutput);
+// Do the tweet in a cron 
+var job = new cronJob({
+    cronTime: '0 */5 * * * *',
+    onTick: function() {
+      getToken().then((token)=>{
+        callTrending('all', 'all', token).then((output) => {
+          shortURL (output).then((news) => {
+            var fields2 = news.split('~');
+            var newsoutput = fields2[0];
+            var tweetbodyoutput = fields2[1];
+            console.log('Shortining done now : ' + news);
+            console.log('tweet body done now : ' + tweetbodyoutput);
       
-var tweet = { status: newsoutput }
-	  T.post('statuses/update', tweet, tweeted) 
+            var tweet = { status: newsoutput }
+            T.post('statuses/update', tweet, tweeted) 
       
-    });
-    
-    
-  });
-}).catch((error) => {
-    // If there is an error let the user know
-    console.log(error);
-  });
+          });
+       });
+      }).catch((error) => {
+          // If there is an error let the user know
+          console.log(error);
+      });
+    },
+    start: true,
+    timeZone: 'Asia/Kolkata'
+});
 
-
-
+job.start();
 
 function tweeted(err, data, response) {
 	if(err){
