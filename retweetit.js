@@ -25,7 +25,7 @@ var job = new cronJob({
             console.log('Shortining done now : ' + news);
             console.log('tweet body done now : ' + tweetbodyoutput);
       
-            var tweet = { status: tweetbodyoutput.'. تابعنا ليصلك كل جديد '  }
+            var tweet = { status: tweetbodyoutput+'. تابعنا ليصلك كل جديد '  }
             T.post('statuses/update', tweet, tweeted) 
       
           });
