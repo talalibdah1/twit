@@ -25,7 +25,7 @@ var job = new cronJob({
             console.log('Shortining done now : ' + news);
             console.log('tweet body done now : ' + tweetbodyoutput);
       
-            var tweet = { status: newsoutput+'. تابعنا ليصلك كل جديد '  }
+            var tweet = { status: newsoutput }
             T.post('statuses/update', tweet, tweeted) 
       
           });
@@ -162,7 +162,7 @@ function shortURL (name) {
 
                 // Resolve the promise with the output text
                 console.log('Short URL is: ' + short);
-                output2=texto+' '+key1+' '+key2+' '+key3+' '+key4+' '+short+'~'+tweetbody;
+                output2=texto+' '+key1+' '+key2+' '+'ريتويت لتحصل على بطاقة تسوق أمازون'+' '+short+'~'+tweetbody;
                 console.log('Outputtoo is: ' + output2);
                 resolve(output2);
               });
