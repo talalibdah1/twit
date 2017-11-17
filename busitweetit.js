@@ -2,10 +2,10 @@ var cronJob = require('cron').CronJob;
 var Twit = require('twit');
 //var config = require();
 var T = new Twit({
-  consumer_key:         'F6msuBR8nQE56P9SGZezoa5LU',
-  consumer_secret:      'zAgh3Wy5yKJOFUrfESxur370TyPOsmCibKqZ1JhOk0RMmvnvR7',
-  access_token:         '893799894728790018-xLhf1tORCcWF6RE3gDunOaXZUYDL3Ja',
-  access_token_secret:  'pFPxl44p8USfVlONIJJopY9Iwq7yoE9z07ILGj1Zxf0SO'
+  consumer_key:         'D7nf2hveS2HcLXNYCyuowVRK3',
+  consumer_secret:      'YVLyRsmRjMJgUaHD80gvnwF6sSfn0jjNw9zBWAM1HAtPy5HdAs',
+  access_token:         '893799894728790018-Vyminpate1rWGEXeCfvtf1wfmybbXvy',
+  access_token_secret:  'C77FoUknzygXDyBo68qAprEeZ4cUjHZK3rVDBvB8HuKFk'
   //timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 });
 
@@ -14,7 +14,7 @@ const host = 'www.baaz.com';
 
 // Do the tweet in a cron 
 var job = new cronJob({
-    cronTime: '0 */30 * * * *',
+    cronTime: '0 */49 * * * *',
     onTick: function() {
       getToken().then((token)=>{
         callTrending('all', 'all', token).then((output) => {
