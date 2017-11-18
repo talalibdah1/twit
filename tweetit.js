@@ -162,7 +162,7 @@ function shortURL (name) {
 
                 // Resolve the promise with the output text
                 console.log('Short URL is: ' + short);
-                output2=texto+' '+key1+' '+key2+' '+'ريتويت لتحصل على بطاقة تسوق أمازون'+' '+short+'~'+tweetbody;
+                output2=texto+' '+key1+' '+key2+' '+'. تابعنا ليصلك كل جديد'+' '+short+'~'+tweetbody;
                 console.log('Outputtoo is: ' + output2);
                 resolve(output2);
               });
