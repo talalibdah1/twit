@@ -14,7 +14,7 @@ const host = 'www.baaz.com';
 
 // Do the tweet in a cron 
 var job = new cronJob({
-    cronTime: '0 */38 * * * *',
+    cronTime: '0 */20 * * * *',
     onTick: function() {
       getToken().then((token)=>{
         callTrending('all', 'all', token).then((output) => {
@@ -22,11 +22,11 @@ var job = new cronJob({
             var fields2 = news.split('~');
             var newsoutput = fields2[0];
             var tweetbodyoutput = fields2[1];
-            console.log('Shortining done now : ' + news);
-            console.log('tweet body done now : ' + tweetbodyoutput);
+            // console.log('Shortining done now : ' + news);
+            // console.log('tweet body done now : ' + tweetbodyoutput);
       
-            var tweet = { status: tweetbodyoutput }
-            T.post('statuses/update', tweet, tweeted) 
+            // var tweet = { status: tweetbodyoutput }
+            // T.post('statuses/update', tweet, tweeted) 
       
           });
        });
@@ -42,12 +42,12 @@ var job = new cronJob({
 job.start();
 
 function tweeted(err, data, response) {
-	if(err){
-		console.log("Something went wrong! "+err);
-	}
-	else{
-		console.log("Voila It worked!");
-	}
+  if(err){
+    console.log("Something went wrong! "+err);
+  }
+  else{
+    console.log("Voila It worked!");
+  }
 } 
 
 function callTrending (country, category, token) {
@@ -82,6 +82,10 @@ function callTrending (country, category, token) {
         index=Math.floor(Math.random() * response.data.length) + 1 ;
       }
       console.log('index is: '+index);
+      let storyId = response.data[index-1].id;
+
+      //Retweet some
+      retweet(storyId, token);
 
       let title = response.data[index-1].name;
       let link = response.data[index-1].url;
@@ -219,4 +223,49 @@ function getToken () {
             req.write(JSON.stringify({"grant_type" : "client_credentials", "client_id" : "api"}));
             req.end();
   });
+}
+
+function retweet(storyId, token){
+
+    // Create the path for the HTTP request to get the news
+    let path = '/api/1.1/topics/'+storyId+'/posts?limit=25&socialNetworks=twitter&order=recent';
+
+    console.log('Requesting Single Story Tweets ' + path);
+
+    //options
+    var options = {
+      "method": "GET",
+      "hostname": "www.baaz.com",
+      "port": null,
+      "path": path,
+      "headers": {
+        "content-type": "application/json",
+        "authorization": "bearer "+token,
+        "cache-control": "no-cache",
+      }
+    };
+
+    var req = http.request(options, function (res) {
+      let body = ''; // var to store the response chunks
+      res.on('data', (d) => { body += d; });
+
+      res.on('end', () => { 
+        let response = JSON.parse(body);
+        console.log('Story tweets length is '+response.data.length);
+
+        // Get Most Recent Tweet to Retweet
+        let tweetId = response.data[0].sources[0].social_post_id;
+        T.post('statuses/retweet/:id', { id: tweetId }, function (err, data, response) {
+          console.log(data)
+        })
+
+      });
+
+      res.on('error', (error) => {
+        console.log(error);
+      });
+
+    });
+    req.end();
+
 }
